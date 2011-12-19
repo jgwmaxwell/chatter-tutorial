@@ -1,4 +1,8 @@
 Chatter::Application.routes.draw do
+
+  resources :users, :only => [:index]
+
+  resources :followings, :only => [:create, :destroy]
   resources :posts
 
   get "dashboard/index"
