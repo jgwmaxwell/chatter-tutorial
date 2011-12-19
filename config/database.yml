@@ -16,7 +16,7 @@ development:
   adapter: postgresql
   encoding: unicode
   database: chatter_development
-  pool: 5
+  pool: 10
   username: john
   password:
 

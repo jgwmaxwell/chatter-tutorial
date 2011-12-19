@@ -27,6 +27,7 @@ class Post < ActiveRecord::Base
   # 1 and 140 characters long.
   validates :body, :length => 1..140, :presence => true
 
+  has_and_belongs_to_many :tags
 
   # create a virtual attribute to store the ip_address of
   # the request
@@ -36,5 +37,16 @@ class Post < ActiveRecord::Base
 
   def ip_address=(ip)
     @ip_address = ip
+  end
+
+  serialize :tag_list
+  before_save :generate_taglist
+  after_commit :process_tags
+  private
+  def generate_taglist
+    self.tag_list = self.body.scan(/\B#(\w*[A-Za-z0-9_]+\w*)/).flatten
+  end
+  def process_tags
+    TAG_PROCESSOR.push(:tag_class => Tag, :post_id => self.id)
   end
 end
