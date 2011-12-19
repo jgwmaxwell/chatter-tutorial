@@ -1,4 +1,6 @@
 Chatter::Application.routes.draw do
+  resources :posts
+
   get "dashboard/index"
 
   devise_for :users do

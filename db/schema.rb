@@ -11,7 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111218174327) do
+ActiveRecord::Schema.define(:version => 20111219001912) do
+
+  create_table "posts", :force => true do |t|
+    t.string   "body"
+    t.integer  "user_id"
+    t.integer  "reply_to_id"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "city"
+    t.string   "country"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "posts", ["city"], :name => "index_posts_on_city"
+  add_index "posts", ["country"], :name => "index_posts_on_country"
+  add_index "posts", ["reply_to_id"], :name => "index_posts_on_reply_to_id"
+  add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
