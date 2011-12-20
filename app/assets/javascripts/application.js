@@ -6,4 +6,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require ../bootstrapjs/bootstrap-twipsy
+//= require_tree ../bootstrapjs
+//= require handlebars.vm
+//= require_tree ../templates
 //= require_tree .
