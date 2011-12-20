@@ -1,5 +1,7 @@
 Chatter::Application.routes.draw do
 
+  resources :mentions
+
   resources :users, :only => [:index]
 
   resources :followings, :only => [:create, :destroy]

@@ -23,6 +23,9 @@ class Post < ActiveRecord::Base
   has_many :replies, :class_name => "Post", :foreign_key => "reply_to_id"
   belongs_to :in_reply_to, :class_name => "Post", :foreign_key => "reply_to_id"
 
+  has_many :mentions
+  has_many :mentionings, :through => :mentions, :source => :user
+
   # make sure that the post has a body, and that it is between
   # 1 and 140 characters long.
   validates :body, :length => 1..140, :presence => true

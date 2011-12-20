@@ -16,6 +16,9 @@ gem 'geocoder'
 gem 'unicorn'
 gem 'girl_friday'
 
+## part 6 gems
+gem 'pubnub-ruby'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

@@ -11,24 +11,45 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111219115524) do
+ActiveRecord::Schema.define(:version => 20111220032444) do
+
+  create_table "channels", :force => true do |t|
+    t.integer  "broadcastable_id"
+    t.string   "broadcastable_type"
+    t.string   "channel_ident"
+    t.datetime "last_validated"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "channels", ["broadcastable_id", "broadcastable_type"], :name => "index_channels_on_broadcastable_id_and_broadcastable_type"
 
   create_table "followings", :force => true do |t|
     t.integer  "user_id"
     t.integer  "follower_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "followings", ["follower_id"], :name => "index_followings_on_follower_id"
   add_index "followings", ["user_id"], :name => "index_followings_on_user_id"
 
+  create_table "mentions", :force => true do |t|
+    t.integer  "post_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "mentions", ["post_id"], :name => "index_mentions_on_post_id"
+  add_index "mentions", ["user_id"], :name => "index_mentions_on_user_id"
+
   create_table "posts", :force => true do |t|
     t.string   "body"
     t.integer  "user_id"
     t.integer  "reply_to_id"
-    t.float    "latitude",    :limit => 17
-    t.float    "longitude",   :limit => 17
+    t.float    "latitude"
+    t.float    "longitude"
     t.string   "city"
     t.string   "country"
     t.datetime "created_at"

@@ -1,5 +1,7 @@
 class Tag < ActiveRecord::Base
+
   has_and_belongs_to_many :posts
+  has_one :channel, :as => :broadcastable
 
   def self.process_tags(post_id)
     p = Post.find(post_id)

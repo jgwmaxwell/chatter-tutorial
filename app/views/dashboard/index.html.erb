@@ -5,3 +5,14 @@
 </ul>
 <%= link_to "Create a new post", new_post_path %> |
 <%= link_to "Find People", users_path %>
+<script>
+
+    // -------------------
+    // LISTEN FOR MESSAGES
+    // -------------------
+    PUBNUB.subscribe({
+        channel  : "<%= Digest::SHA1.hexdigest(current_user.username, current_user.created_at) %>",
+        callback : function(message) { alert(message) }
+    })
+
+</script>
