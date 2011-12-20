@@ -1,4 +1,4 @@
-# PostgreSQL. Versions 8.2 and up are supported.
+# PostgreSQL. Versions 7.4 and 8.x are supported.
 #
 # Install the pg driver:
 #   gem install pg
@@ -15,9 +15,9 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: chatter32_development
-  pool: 5
-  username: chatter32
+  database: chatter_development
+  pool: 10
+  username: john
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -41,15 +41,15 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: chatter32_test
+  database: chatter_test
   pool: 5
-  username: chatter32
+  username: john
   password:
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: chatter32_production
+  database: chatter_production
   pool: 5
-  username: chatter32
-  password:
+  username: john
+  password: 

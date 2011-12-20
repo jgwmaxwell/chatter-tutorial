@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Chatter32::Application.config.secret_token = '9645a6577802edc10d4abd43f32b935495a324eace1f6dd2a1b3e2ec55b5b4ead8bf610d4d91bee1b8bd8dc3c548a19ae7d6b914affb8960d1b1cf4e56979768'
+Chatter::Application.config.secret_token = '46affd1187bf26e5b03da6e0cda82ef2ec0b215c8f60f32297662a942060c7e87645f5982403d72e72b23bea8853b8498e253a5d9ffdf9120e0077ccf5bc89b8'

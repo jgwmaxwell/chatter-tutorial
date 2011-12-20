@@ -1,4 +1,4 @@
-Chatter32::Application.configure do
+Chatter::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -23,7 +23,7 @@ Chatter32::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   # Raise exception on mass assignment protection for ActiveRecord models
-  config.active_record.mass_assignment_sanitizer = :strict
+  config.active_record.mass_assignment_sanitizer = :logger
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)

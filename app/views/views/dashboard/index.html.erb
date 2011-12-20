@@ -1,0 +1,7 @@
+<h1>Welcome <%= current_user.username %></h1>
+<p><%= current_user.try(:description) %></p>
+<ul>
+<%= render @posts %>
+</ul>
+<%= link_to "Create a new post", new_post_path %> |
+<%= link_to "Find People", users_path %>
