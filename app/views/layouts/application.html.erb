@@ -1,21 +1,101 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Chatter</title>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Chatter</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-</head>
-<body>
-<div
-    id=pubnub
-    pub-key=demo
-    sub-key=demo
-    ssl=off
-    origin=pubsub.pubnub.com
-></div>
-<script src=http://cdn.pubnub.com/pubnub-3.1.min.js ></script>
-<%= yield %>
+  </head>
+  <body>
 
-</body>
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="#">Chatter Tutorial</a>
+          <ul class="nav">
+            <li class="active"><a href="/">Home</a></li>
+          </ul>
+          <% unless current_user %>
+            <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "pull-right" }) do |f| %>
+              <%= f.text_field :username, :class => "input-small", :placeholder => "Username" %>
+              <%= f.password_field :password, :class => "input-small", :placeholder => "Password" %>
+              <%= button_tag "Sign in", :disable_with => "Please wait...", :class => "btn" %>
+            <% end %>
+          <% else %>
+            <%= form_tag destroy_user_session_path, :method => :delete, :class => "pull-right" do %>
+              <%= button_tag "Sign out", :class => "btn" %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+          <% if current_user %>
+          <h1>@<%= current_user.username if current_user %> <small>Your Timeline</small></h1>
+          <% else %>
+          <h1>Please sign in <small>Or <%= link_to "Register", register_path %></h1>
+          <% end %>
+        </div>
+        <div class="row">
+          <div class="span10" id="statusUpdater">
+          <% if current_user %>
+              <div class="clearfix">
+              <%= form_for Post.new do |f| %>
+                <%= f.text_field :body, :class => "span8", :placeholder => "What are you thinking?" %>
+                <%= button_tag "Post", :disable_with => "Please wait...", :class => "span2 btn pull-right" %>
+              <% end %>
+              </div>
+          <% end %>
+          <div class="clearfix" id="timelineContainer">
+            <%= yield %>
+          </div>
+          </div>
+        </div>
+
+      </div>
+
+      <footer>
+        <p>This is a Ruby on Rails tutorial by <%= link_to "@jgwmaxwell", "http://twitter.com/jgwmaxwell" %></p>
+      </footer>
+
+    </div> <!-- /container -->
+  <% if current_user %>
+  <div
+      id=pubnub
+      pub-key=demo
+      sub-key=demo
+      ssl=off
+      origin=pubsub.pubnub.com
+  ></div>
+  <script src=http://cdn.pubnub.com/pubnub-3.1.min.js ></script>
+  <script>
+
+    function updateTimeline(message) {
+        var html = JST['post'](jQuery.parseJSON(message));
+        $('#timeline').prepend(html);
+    }
+
+    // -------------------
+    // LISTEN FOR MESSAGES
+    // -------------------
+    PUBNUB.subscribe({
+        channel  : "<%= Digest::SHA1.hexdigest(current_user.username, current_user.created_at) %>",
+        callback : function(message) { updateTimeline(message) }
+    })
+
+  </script>
+  <% end %>
+  </body>
 </html>

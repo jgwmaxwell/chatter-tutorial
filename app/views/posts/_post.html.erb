@@ -1,11 +1,11 @@
-<% self_posted = post.user == current_user %>
-<li>
-  <%= self_posted ? "You" : post.user.username %> said:
-  <br />
-  <%= post.body %>
-  <%= link_to "Reply?", new_post_path(:reply_to_id => post.id) %>
+<blockquote>
+  <p><%= post.body %></p>
+  <small>
   <% if post.user == current_user %>
-  <%= link_to "Delete?", post,
-      :method => :delete, :prompt => "Are you sure?" %>
-  <% end %>
-</li>
+    You
+  <% else %>
+    <%= link_to post.user.username, "#" %>
+  <% end %>.
+  <%= time_ago_in_words(post.created_at) %> ago.
+  </small>
+</blockquote>

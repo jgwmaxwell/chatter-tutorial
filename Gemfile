@@ -24,7 +24,7 @@ gem 'pubnub-ruby'
 group :assets do
   gem 'sass-rails',   '~> 3.2.0'
   gem 'coffee-rails', '~> 3.2.0'
-
+  gem 'handlebars_assets'
   gem 'uglifier', '>= 1.0.3'
 end
 
